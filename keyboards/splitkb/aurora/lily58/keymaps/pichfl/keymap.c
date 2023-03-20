@@ -277,7 +277,7 @@ static const char PROGMEM layer_play[] = {
 };
 
 void fp_render_layer_state(void) {
-    oled_set_cursor(0, 12);
+    oled_set_cursor(0, 11);
 
     if (layer_state_is(_FP_GAMING)) {
         oled_write_raw_P(layer_play, sizeof(layer_play));
@@ -290,6 +290,24 @@ void fp_render_layer_state(void) {
     } else {
         oled_write_raw_P(layer_default, sizeof(layer_default));
     }
+}
+
+void fp_render_modifier_state(void) {
+    uint8_t modifiers = get_mods() | get_oneshot_mods();
+
+    oled_set_cursor(0, 15);
+    // oled_write_char(shift, modifiers & MOD_MASK_SHIFT);
+    // oled_set_cursor(1, 15);
+    // oled_write_char(control, modifiers & MOD_MASK_CTRL);
+    // oled_set_cursor(2, 15);
+    // oled_write_char(option, modifiers & MOD_MASK_ALT);
+    // oled_set_cursor(3, 15);
+    // oled_write_char(command, modifiers & MOD_MASK_GUI);
+
+    oled_write_P(PSTR("C"), modifiers & MOD_MASK_CTRL);
+    oled_write_P(PSTR("O"), modifiers & MOD_MASK_ALT);
+    oled_write_P(PSTR("S"), modifiers & MOD_MASK_SHIFT);
+    oled_write_P(PSTR("M"), modifiers & MOD_MASK_GUI);
 }
 
 #define FRAME_TIME 350
@@ -331,6 +349,7 @@ bool oled_task_user(void) {
         oled_write_raw_P(shuttle, sizeof(shuttle));
         render_animation(launch_frames, sizeof(launch_1), 5, 0, 5);
         fp_render_layer_state();
+        fp_render_modifier_state();
     } else {
         render_animation(space_frames, sizeof(space_1), 5, 0, 0);
     }
