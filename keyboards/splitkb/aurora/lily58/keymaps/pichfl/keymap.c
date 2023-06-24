@@ -11,24 +11,24 @@ enum fp_layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT( // _DEFAULT
-        DE_CIRC        , KC_1   , KC_2   , KC_3   , KC_4,    KC_5 ,                   KC_6         , KC_7   , KC_8   , KC_9  , KC_0   , DE_SS  ,
+        KC_ESC         , KC_1   , KC_2   , KC_3   , KC_4,    KC_5 ,                   KC_6         , KC_7   , KC_8   , KC_9  , KC_0   , DE_SS  ,
         KC_TAB         , KC_Q   , KC_W   , KC_E   , KC_R,    KC_T ,                   DE_Z         , KC_U   , KC_I   , KC_O  , KC_P   , DE_PLUS,
-        LCTL_T(KC_ESC) , KC_A   , KC_S   , KC_D   , KC_F,    KC_G ,                   KC_H         , KC_J   , KC_K   , KC_L  , DE_ACUT, DE_HASH,
+        LCTL_T(DE_CIRC), KC_A   , KC_S   , KC_D   , KC_F,    KC_G ,                   KC_H         , KC_J   , KC_K   , KC_L  , DE_ACUT, DE_HASH,
         LSFT_T(DE_LABK), DE_Y   , KC_X   , KC_C   , KC_V,    KC_B , LT(3, KC_F19), KC_BSPC, KC_N   , KC_M   , KC_COMM, KC_DOT, DE_MINS, KC_RSFT,
                                            KC_LALT, KC_LGUI, MO(1), KC_SPC       , KC_ENT , MO(2)  , KC_RGUI, KC_RALT
     ),
     [1] = LAYOUT( // _LOWER
         KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  ,                   KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 ,
-        _______, XXXXXXX, XXXXXXX, DE_DQUO, S(KC_8), S(KC_9),                   KC_PGUP, DE_UDIA, KC_UP  , DE_ODIA, KC_HOME, XXXXXXX,
-        _______, DE_ADIA, DE_AMPR, DE_QUOT, A(KC_5), A(KC_6),                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_END , XXXXXXX,
-        _______, XXXXXXX, XXXXXXX, XXXXXXX, A(KC_8), A(KC_9), _______, KC_DEL,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, XXXXXXX, XXXXXXX, DE_DQUO, S(KC_8), S(KC_9),                   XXXXXXX, DE_UDIA, XXXXXXX, DE_ODIA, KC_PGUP, KC_HOME,
+        _______, DE_ADIA, XXXXXXX, DE_QUOT, A(KC_5), A(KC_6),                   XXXXXXX, XXXXXXX, KC_UP  , XXXXXXX, KC_PGDN, KC_END ,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, A(KC_8), A(KC_9), _______, KC_DEL,  XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, _______,
                                    _______, _______, _______, KC_ENT , KC_SPC , MO(3)  , KC_DEL, _______
     ),
     [2] = LAYOUT( // _RAISE
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5  , KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10 , KC_F11 , KC_F12,
-        _______, XXXXXXX, XXXXXXX, DE_DQUO, S(KC_8), S(KC_9),                   KC_PGUP, DE_UDIA, KC_UP  , DE_ODIA, KC_HOME, XXXXXXX,
-        _______, DE_ADIA, DE_AMPR, DE_QUOT, A(KC_5), A(KC_6),                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_END , XXXXXXX,
-        _______, XXXXXXX, XXXXXXX, XXXXXXX, A(KC_8), A(KC_9), _______, KC_DEL , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, XXXXXXX, XXXXXXX, DE_DQUO, S(KC_8), S(KC_9),                   XXXXXXX, DE_UDIA, XXXXXXX, DE_ODIA, KC_PGUP, KC_HOME,
+        _______, DE_ADIA, XXXXXXX, DE_QUOT, A(KC_5), A(KC_6),                   XXXXXXX, XXXXXXX, KC_UP  , XXXXXXX, KC_PGDN, KC_END ,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, A(KC_8), A(KC_9), _______, KC_DEL , XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, _______,
                                    _______, _______, MO(3)  , KC_ENT , KC_SPC , _______, _______, _______
     ),
     [3] = LAYOUT( // _ADJUST
@@ -42,8 +42,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC , _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
         KC_TAB , _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
         DE_LABK, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
-        KC_LSFT, _______, _______, _______, _______, _______, _______, TG(4)  , _______, _______, _______, _______, _______, _______,
-                                   KC_ENT , KC_LCTL, KC_LGUI, _______, _______, _______, _______, _______
+        KC_LSFT, _______, _______, _______, _______, _______, KC_F19 , TG(4)  , _______, _______, _______, _______, _______, _______,
+                                   KC_ENT , KC_LCTL, KC_LGUI, KC_SPC , _______, _______, _______, _______
     ),
 };
 
@@ -359,6 +359,32 @@ bool oled_task_user(void) {
 
 bool should_process_keypress(void) {
     return true;
+}
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    uint8_t WASD[6][2] = {{0, 0}, {1, 2}, {2, 1}, {2, 2}, {2, 3}, {4, 5}};
+
+    HSV escape_color_hsv = {10, 255, rgb_matrix_get_val()};
+    HSV highlight_color_hsv = {128, 10, rgb_matrix_get_val()};
+    RGB highlight_color_rgb = hsv_to_rgb(highlight_color_hsv);
+    RGB escape_color_rgb = hsv_to_rgb(escape_color_hsv);
+
+    if (get_highest_layer(layer_state | default_layer_state) == 4) {
+        rgb_matrix_enable_noeeprom();
+
+        for (uint8_t i = 0; i < 6; i++) {
+            uint8_t index = g_led_config.matrix_co[WASD[i][0]][WASD[i][1]];
+
+            if (i == 0) {
+                rgb_matrix_set_color(index, escape_color_rgb.r, escape_color_rgb.g, escape_color_rgb.b);
+                continue;
+            }
+
+            rgb_matrix_set_color(index, highlight_color_rgb.r, highlight_color_rgb.g, highlight_color_rgb.b);
+        }
+    }
+
+    return false;
 }
 
 // const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
