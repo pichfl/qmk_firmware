@@ -16,8 +16,17 @@ static int default_hue = 0;
 static int default_sat = 0;
 static int default_val = 0;
 
+// speed: 45
+#define SONG_GOLD SONG(S__NOTE(_B5), QD_NOTE(_E6));
+
+// speed: 35
+#define SONG_CENTER SONG(E__NOTE(_D5), E__NOTE(_A4), E__NOTE(_D5), Q__NOTE(_A5), Q__NOTE(_G5), E__NOTE(_FS5), E__NOTE(_E5), E__NOTE(_CS5), Q__NOTE(_A4));
+
+// speed: 35
+#define SONG_SUCCESS SONG(Q__NOTE(_B5), Q__NOTE(_B5), E__NOTE(_B5), E__NOTE(_GS5), E__NOTE(_E6));
+
 static float sound_start[][2] = SONG(S__NOTE(_B5), QD_NOTE(_E6));
-static float sound_break[][2] = SONG(E__NOTE(_D5), E__NOTE(_A4), E__NOTE(_D5), Q__NOTE(_A5), Q__NOTE(_G5), E__NOTE(_FS5), E__NOTE(_E5), E__NOTE(_CS5), Q__NOTE(_A4));
+static float sound_break[][2] = SONG_SUCCESS;
 
 int get_remaining_time(void) {
     if (pomodoro_state == POMODORO_INACTIVE) {
@@ -71,7 +80,6 @@ void pomodoro_start(void) {
 
     audio_set_tempo(45);
     PLAY_SONG(sound_start);
-    audio_set_tempo(TEMPO_DEFAULT);
 }
 
 void pomodoro_start_break(void) {
@@ -82,9 +90,8 @@ void pomodoro_start_break(void) {
     pomodoro_state = POMODORO_BREAK;
     pomodoro_timer = timer_read32();
 
-    audio_set_tempo(36);
+    audio_set_tempo(35);
     PLAY_SONG(sound_break);
-    audio_set_tempo(TEMPO_DEFAULT);
 }
 
 void pomodoro_stop(void) {

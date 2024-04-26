@@ -4,6 +4,7 @@
 #include "lib/fullscreen_animation.h"
 #include "lib/pomodoro.h"
 #include "lib/tiny_painter.h"
+#include "os_detection.h"
 
 static uint32_t display_sleep_timer;
 static uint32_t rgb_sleep_timer;
@@ -14,6 +15,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         display_sleep_timer = timer_read32();
         rgb_sleep_timer     = timer_read32();
         oled_on();
+        rgb_matrix_set_suspend_state(false);
         rgb_matrix_enable_noeeprom();
     }
 

@@ -5,7 +5,7 @@
 #include "tiny_painter.h"
 
 #ifndef POMODORO_WORK_TIME
-#    define POMODORO_WORK_TIME 25 * 60 * 1000
+#    define POMODORO_WORK_TIME 15 * 60 * 1000
 #endif
 
 #ifndef POMODORO_BREAK_TIME
